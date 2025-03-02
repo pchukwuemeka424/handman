@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: `${process.env.APP_DESCRIPTION}`,
   keywords: "Afrivendor, Nigeria vendor, afrivendor.ng, online marketplace, Nigeria businesses,wigs hair online vendors, Nigeria e-commerce, vendor platform, buy from Africa, shop Nigeria products, Nigeria goods, local Nigeria businesses, online vendors",
   author: "Acehub Technologies",
-  viewport: "width=device-width, initial-scale=1.0",
+
   robots: "index, follow",
   openGraph: {
     title: `${process.env.APP_NAME}`,

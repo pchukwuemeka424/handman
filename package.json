@@ -51,6 +51,7 @@
     "react-toastify": "^11.0.2",
     "react-webcam": "^7.2.0",
     "resend": "^4.1.1",
+    "run-parallel": "^1.2.0",
     "sharp": "^0.33.5",
     "sim-ph": "^1.0.1",
     "slick-carousel": "^1.8.1",
