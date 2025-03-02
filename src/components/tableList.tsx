@@ -112,11 +112,7 @@ export default function TableComponent() {
           </TableHeader>
           <TableBody>
             {currentProducts.map((product) => (
-<<<<<<< HEAD
               <TableRow key={product.id}>
-=======
-              <TableRow key={product.user_id}>
->>>>>>> 289a2ea15e8b55fb67a7d96029f3aeb75773f25b
                 <TableCell className="font-medium">
     
                   <Image 
