@@ -17,7 +17,7 @@ export default function ProductList() {
       <div className="flex-1 p-6 bg-gray-50 space-y-6 overflow-y-auto">
         {/* Topbar */}
         
-        <Topbar />
+      
 
         <Table />
       </div>

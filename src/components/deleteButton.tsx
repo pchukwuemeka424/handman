@@ -8,9 +8,9 @@ const DeleteButton = ({ productId, imagePath }: { productId: string; imagePath: 
     try {
       // Delete the product from the "products" table by productId
       const { error: deleteError } = await supabase
-        .from("products")
+        .from("images")
         .delete()
-        .eq("user_id", productId);
+        .eq("id", productId);
       if (deleteError) {
         console.error("Error deleting product:", deleteError);
         alert("Failed to delete the product from the database.");

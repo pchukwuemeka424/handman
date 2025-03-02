@@ -122,7 +122,7 @@ export default function TableComponent() {
                 <TableCell className="font-medium">{product.category}</TableCell>
                 <TableCell className="font-medium">{product.stock}</TableCell>
                 <TableCell className="font-medium">
-                  <DeleteButton productId={product.user_id} imagePath={product.image} />
+                  <DeleteButton productId={product.id} imagePath={product.image} />
                 </TableCell>
               </TableRow>
             ))}
