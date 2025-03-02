@@ -36,11 +36,7 @@ export default async function Product() {
   const { data: profile, error: profileError } = await supabase
     .from("user_profile")
     .select("*")
-<<<<<<< HEAD
     .eq("user_id", user.id)
-=======
-    .eq("id", user.id)
->>>>>>> 289a2ea15e8b55fb67a7d96029f3aeb75773f25b
     .single();
 
   if (profileError || !profile || !profile.plan) {
