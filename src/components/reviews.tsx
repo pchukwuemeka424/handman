@@ -14,6 +14,7 @@ export default function Reviews({ userDetail }) {
   const [rating, setRating] = useState(0);
   const [userName, setUserName] = useState("");
   const [visibleCount, setVisibleCount] = useState(3);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     fetchReviews();
@@ -35,12 +36,12 @@ export default function Reviews({ userDetail }) {
 
   async function submitReview() {
     if (!newReview.trim() || rating === 0 || !userName.trim()) {
-      console.error("All fields are required");
+      setErrorMessage("All fields, including a star rating, are required.");
       return;
     }
 
     if (!userDetail?.user_id) {
-      console.error("User ID is missing. Ensure userDetail is populated.");
+      setErrorMessage("User ID is missing. Ensure userDetail is populated.");
       return;
     }
 
@@ -62,6 +63,7 @@ export default function Reviews({ userDetail }) {
     setNewReview("");
     setUserName("");
     setRating(0);
+    setErrorMessage("");
     fetchReviews();
   }
 
@@ -87,6 +89,7 @@ export default function Reviews({ userDetail }) {
         </Button>
       )}
       <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
+        {errorMessage && <p className="text-red-500 mb-2">{errorMessage}</p>}
         <Label className="block text-gray-700 font-semibold">Your Name</Label>
         <Input
           value={userName}

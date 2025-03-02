@@ -5,6 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from ".
 import Image from "next/image";
 import { createClient } from "@/utils/supabase/client";
 import DeleteButton from "./deleteButton";
+import { FaTrash } from "react-icons/fa6";
 
 const supabase = createClient();
 
@@ -14,7 +15,7 @@ export default function TableComponent() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(5);
   const [totalPages, setTotalPages] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -97,10 +98,7 @@ export default function TableComponent() {
           <TableHeader>
             <TableRow>
               <TableHead>Image</TableHead>
-              <TableHead>Title</TableHead>
-              <TableHead>Price</TableHead>
-              <TableHead>Category</TableHead>
-              <TableHead>Stock</TableHead>
+       
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -114,14 +112,14 @@ export default function TableComponent() {
                     alt={product.image} 
                     width={50} 
                     height={50} 
+                    className="w-10 h-10"
                    
                   />
                 </TableCell>
-                <TableCell className="font-medium">{product.title}</TableCell>
-                <TableCell className="font-medium">{product.price}</TableCell>
-                <TableCell className="font-medium">{product.category}</TableCell>
-                <TableCell className="font-medium">{product.stock}</TableCell>
+           
                 <TableCell className="font-medium">
+                  {/* add trash can icon  */}
+                 
                   <DeleteButton productId={product.id} imagePath={product.image} />
                 </TableCell>
               </TableRow>

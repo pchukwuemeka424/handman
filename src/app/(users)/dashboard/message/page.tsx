@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { FaEnvelope, FaEnvelopeOpen, FaUser, FaTrash } from "react-icons/fa";
+import { FaEnvelope, FaEnvelopeOpen, FaUser, FaTrash, FaPhone, FaMapMarkerAlt } from "react-icons/fa";
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
 import Link from "next/link";
@@ -62,9 +62,8 @@ export default function MessageInbox() {
     <div className="p-6 bg-gray-50 min-h-screen">
       <h2 className="text-3xl font-bold mb-6 text-gray-800">Inbox</h2>
       <div className="bg-white rounded-xl shadow-md p-4 space-y-4">
-        {/* Message List */}
         {messages.map((msg) => (
-          <div key={msg.id} className="border-b border-gray-200 p-4 rounded-lg hover:bg-gray-100 transition duration-200">
+          <div key={msg.id} className="border border-gray-200 p-4 rounded-lg shadow-sm hover:bg-gray-100 transition duration-200">
             {/* Message Header */}
             <div
               className="flex items-center justify-between cursor-pointer"
@@ -74,7 +73,10 @@ export default function MessageInbox() {
                 <FaUser className="text-gray-500 text-xl" />
                 <div>
                   <div className="font-semibold text-gray-900">{msg.name}</div>
-                  <div className="text-sm text-gray-600">{msg.subject}</div>
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <FaEnvelope className="text-gray-500" />
+                    {msg.subject}
+                  </div>
                   <span className="text-xs text-gray-500">
                     {new Date(msg.created_at).toLocaleString()}
                   </span>
@@ -91,7 +93,7 @@ export default function MessageInbox() {
                     e.stopPropagation();
                     handleDelete(msg.id);
                   }}
-                  className="text-red-500 ml-4 hover:text-red-700 transition"
+                  className="ml-4 bg-red-100 p-2 rounded-full text-red-600 hover:bg-red-200 transition"
                   aria-label="Delete message"
                 >
                   <FaTrash />
@@ -103,12 +105,36 @@ export default function MessageInbox() {
             {expandedMessage?.id === msg.id && (
               <div className="mt-4 p-4 bg-gray-100 rounded-lg text-gray-700 text-sm">
                 <p><strong>From:</strong> {msg.name}</p>
-                <p><strong>Phone:</strong> 
-                  <Link href={`tel:${msg.phone}`} className="text-blue-600 hover:underline ml-1">
+                <p className="flex items-center">
+                  <FaPhone className="text-blue-500 mr-2" />
+                  <Link href={`tel:${msg.phone}`} className="text-blue-600 hover:underline">
                     {msg.phone}
                   </Link>
                 </p>
-                <p className="mt-2">{msg.message}</p>
+                {msg.address && (
+                  <p className="flex items-center">
+                    <FaMapMarkerAlt className="text-green-500 mr-2" />
+                    <Link href={`https://maps.google.com/?q=${msg.address}`} target="_blank" rel="noopener noreferrer" className="text-green-600 hover:underline">
+                      {msg.address}
+                    </Link>
+                  </p>
+                )}
+                <p className="mt-2 text-base">{msg.message}</p>
+
+                {/* Display Map if Address Exists */}
+                {msg.address && (
+                  <div className="mt-4">
+                    <iframe
+                      src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyAgtqbeVY1aopamEI-8VCbqTnDBRDXEoRc&q=${encodeURIComponent(msg.address)}`}
+                      width="100%"
+                      height="250"
+                      style={{ border: 0, borderRadius: "8px" }}
+                      allowFullScreen
+                      loading="lazy"
+                    ></iframe>
+                  </div>
+                )}
+
                 {msg.image && (
                   <div className="mt-4 flex justify-center">
                     <Image src={msg.image} width={150} height={150} alt="Message Image" className="rounded-lg shadow-sm h-40 w-48" />

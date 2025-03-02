@@ -1,4 +1,5 @@
 import { createClient } from "@/utils/supabase/client"; // Adjust import based on your project structure
+import { FaTrash } from "react-icons/fa6";
 
 // Initialize the Supabase client
 const supabase = createClient();
@@ -41,7 +42,7 @@ const DeleteButton = ({ productId, imagePath }: { productId: string; imagePath: 
 
   return (
     <button onClick={handleDelete} className="text-red-500 hover:text-red-700">
-      Delete
+    <FaTrash className="text-red-500 hover:text-red-700" />
     </button>
   );
 };
