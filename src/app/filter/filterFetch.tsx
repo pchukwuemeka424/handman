@@ -1,9 +1,9 @@
-import supabaseDb from '@/utils/supabase-db'; 
-import React, { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
+import { useSearchParams } from 'next/navigation';
+import supabaseDb from '@/utils/supabase-db';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Card, CardTitle, CardDescription } from '@/components/ui/card';
-import { useSearchParams } from 'next/navigation';
 import Spinner from '@/components/spinner';
 import { MdErrorOutline } from 'react-icons/md';
 
@@ -32,7 +32,7 @@ const renderStars = (rating: number) => {
 
 export default function SearchProduct() {
   const [userDetail, setUserDetail] = useState<UserProfile[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
@@ -41,7 +41,9 @@ export default function SearchProduct() {
   const state = searchParams.get('state');
 
   const fetchDetails = useCallback(async (page: number, search?: string, state?: string) => {
+    if (!hasMore) return;
     setLoading(true);
+
     try {
       let query = supabaseDb
         .from('user_profile')
@@ -57,7 +59,6 @@ export default function SearchProduct() {
 
       if (data.length === 0) {
         setHasMore(false);
-        setLoading(false);
         return;
       }
 
@@ -77,39 +78,37 @@ export default function SearchProduct() {
         return { ...user, averageRating, reviewCount };
       });
 
+      setUserDetail(prev => [...prev, ...userRatings.filter(p => !prev.some(prev => prev.id === p.id))]);
+
       if (userRatings.length < 10) setHasMore(false);
-      setUserDetail((prev) => (page === 1 ? userRatings : [...prev, ...userRatings.filter((p) => !prev.some((prev) => prev.id === p.id))]));
     } catch (error) {
       console.error('Error fetching users:', error.message);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [hasMore]);
 
   useEffect(() => {
     setUserDetail([]);
     setPage(1);
     setHasMore(true);
     fetchDetails(1, search, state);
-  }, [search, state, fetchDetails]);
+  }, [search, state]);
 
   useEffect(() => {
-    if (page > 1) {
-      fetchDetails(page, search, state);
-    }
-  }, [page, search, state, fetchDetails]);
+    const handleScroll = () => {
+      if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 200 && !loading) {
+        setPage(prev => prev + 1);
+      }
+    };
 
-  if (loading && page === 1) return <Spinner />;
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [loading]);
 
-  if (userDetail.length === 0 && !loading) {
-    return (
-      <div className="flex flex-col items-center justify-center py-10">
-        <MdErrorOutline className="text-red-500 text-6xl mb-4" />
-        <h2 className="text-lg font-semibold text-gray-700">No Users Found</h2>
-        <p className="text-sm text-gray-500">Try searching for something else.</p>
-      </div>
-    );
-  }
+  useEffect(() => {
+    fetchDetails(page, search, state);
+  }, [page]);
 
   return (
     <div className="col-span-12 sm:col-span-12">
@@ -130,7 +129,7 @@ export default function SearchProduct() {
                 <CardTitle className="text-xl font-semibold capitalize">{user.busName}</CardTitle>
                 <p className="text-sm text-gray-500">{user.state || 'State'}, {user.city || 'City'}</p>
                 <div className="text-md text-blue-400">
-                  {renderStars(user.averageRating)} {user.averageRating.toFixed(1)}/5 ({user.reviewCount} Reviews)
+                  {renderStars(user.averageRating)} {user.averageRating?.toFixed(1)}/5 ({user.reviewCount} Reviews)
                 </div>
               </div>
             </div>
@@ -140,6 +139,7 @@ export default function SearchProduct() {
         </Link>
       ))}
       {loading && <div className="text-center mt-4">Loading more users...</div>}
+      {!hasMore && <div className="text-center mt-4 text-gray-500">No more users to load.</div>}
     </div>
   );
 }

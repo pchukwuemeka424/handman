@@ -125,7 +125,7 @@ export default function MessageInbox() {
                 {msg.address && (
                   <div className="mt-4">
                     <iframe
-                      src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyAgtqbeVY1aopamEI-8VCbqTnDBRDXEoRc&q=${encodeURIComponent(msg.address)}`}
+                      src={`https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&q=${encodeURIComponent(msg.address)}`}
                       width="100%"
                       height="250"
                       style={{ border: 0, borderRadius: "8px" }}
