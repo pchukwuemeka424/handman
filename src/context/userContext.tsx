@@ -8,7 +8,7 @@ const supabase = createClient();
 const UserContext = createContext(null);
 
 export function UserProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const getUserProfile = async () => {
