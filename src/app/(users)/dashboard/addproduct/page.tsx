@@ -17,15 +17,9 @@ export default async function Product() {
 
   // Fetch total product uploads
   const { count: totalUploads = 0, error: totalUploadsError } = await supabase
-<<<<<<< HEAD
     .from("images")
     .select("*", { count: "exact" })
     .eq("user_id", user.id);
-=======
-    .from("products")
-    .select("*", { count: "exact" })
-    .eq("id", user.id);
->>>>>>> 289a2ea15e8b55fb67a7d96029f3aeb75773f25b
 
   if (totalUploadsError) {
     console.error("Error fetching total uploads:", totalUploadsError);

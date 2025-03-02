@@ -30,15 +30,9 @@ export default function TableComponent() {
       }
 
       const { data, error: dataError, count } = await supabase
-<<<<<<< HEAD
         .from("images")
         .select("*", { count: "exact" })
         .eq("user_id", userDetail.user.id);
-=======
-        .from("products")
-        .select("*", { count: "exact" })
-        .eq("id", userDetail.user.id);
->>>>>>> 289a2ea15e8b55fb67a7d96029f3aeb75773f25b
 
       if (dataError) {
         setError("Error fetching products.");
