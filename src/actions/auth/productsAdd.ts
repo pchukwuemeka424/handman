@@ -70,5 +70,5 @@ export default async function addProduct(state: any, formData: FormData) {
 
   console.log("Images uploaded successfully:", uploadedImagePaths);
 
-  return redirect("/dashboard/productlist");
+  return redirect("/dashboard/manageImages");
 }

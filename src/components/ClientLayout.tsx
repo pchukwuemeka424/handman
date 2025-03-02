@@ -71,13 +71,13 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
             <li className="mb-4 flex items-center">
               <FaPlus className="h-5 w-5 mr-2" />
               <Link href="/dashboard/addproduct" className="hover:bg-gray-700 p-2 rounded">
-                Add Products
+                Add Images
               </Link>
             </li>
             <li className="mb-4 flex items-center">
               <FaCog className="h-5 w-5 mr-2" />
-              <Link href="/dashboard/productlist" className="hover:bg-gray-700 p-2 rounded">
-                Manage Products
+              <Link href="/dashboard/manageImages" className="hover:bg-gray-700 p-2 rounded">
+                Manage Images
               </Link>
             </li>
             <li className="mb-4 flex items-center">
