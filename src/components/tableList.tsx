@@ -111,7 +111,7 @@ export default function TableComponent() {
     
                   <Image 
                     src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${product.image}`} 
-                    alt={product.title} 
+                    alt={product.image} 
                     width={50} 
                     height={50} 
                    
