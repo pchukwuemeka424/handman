@@ -30,24 +30,6 @@ const nextConfig = {
     ],
   },
 
-  // // Add redirect rule for sitemap
-  // async redirects() {
-  //   return [
-  //     {
-  //       source: '/sitemap',      // The URL path to be redirected
-  //       destination: '/sitemap.xml', // The destination URL (sitemap.xml)
-  //       permanent: true,        // This will make it a permanent redirect (HTTP 301)
-  //     },
-  //   ];
-  // },
-
-  // Add next-sitemap configuration
-  sitemap: {
-    siteUrl: 'https://afrivendor.ng', // Update with your actual site URL
-    generateRobotsTxt: true, // Optional: generates a robots.txt file
-    changefreq: 'daily', // Optional: set the change frequency
-    priority: 0.7, // Optional: set the priority for all pages
-  },
 };
 
 module.exports = nextConfig;
