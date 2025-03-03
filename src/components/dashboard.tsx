@@ -85,11 +85,11 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
-      <div className="max-w-4xl w-full space-y-6">
+      <div className="max-w-4xl w-full space-y-2">
         <h1 className="text-3xl font-bold text-center text-gray-800">
           Welcome, <span className="capitalize">{user?.fname ?? "Guest"} {user?.lname ?? ""}</span>
         </h1>
-        <div>{user?.busName}</div>
+        <div className=" text-center text-2xl font-semibold text-gray-700">{user?.busName}</div>
 
         {/* Rating & Notifications */}
         <div className="grid grid-cols-2 gap-4">
