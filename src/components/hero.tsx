@@ -41,7 +41,7 @@ export default function HeroHandyman() {
         </p>
 
         {/* Search Bar Form */}
-        <form action={search} className="flex flex-col sm:flex-row items-center justify-center w-full">
+        <form action={search} className="flex flex-col sm:flex-row items-center space-y-2 justify-center w-full">
           {/* Search Input */}
           <div className="relative w-full sm:w-96">
             <SearchBar value={marketInput} onChange={setMarketInput} />
