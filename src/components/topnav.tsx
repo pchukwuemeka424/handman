@@ -38,13 +38,13 @@ export default function Topnav() {
             <div className="flex items-center ">
               {/* Search Input */}
 
-                 <SearchBar value={marketInput} onChange={setMarketInput} />
+                 <SearchBar value={marketInput} onChange={setMarketInput}  />
               {/* Location Dropdown */}
               <div className="relative w-full sm:w-48">
               
                 <select
                   name="state"
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300  text-gray-700 focus:outline-none">
+                  className="w-full sm:w-48 h-10 pl-10 pr-4 py-2 border border-gray-300  text-gray-700 focus:outline-none">
                   <option value="">Location</option>
                   {nigeriaStates.map((state) => (
                     <option key={state} value={state}>
