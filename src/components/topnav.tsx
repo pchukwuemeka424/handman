@@ -44,7 +44,7 @@ export default function Topnav() {
               
                 <select
                   name="state"
-                  className="w-full pl-10 pr-4 py-2   text-gray-700 focus:outline-none">
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300  text-gray-700 focus:outline-none">
                   <option value="">Location</option>
                   {nigeriaStates.map((state) => (
                     <option key={state} value={state}>
@@ -55,7 +55,7 @@ export default function Topnav() {
               </div>
 
               {/* Search Button */}
-              <button className="bg-blue-500 text-white px-4 h-10 rounded-r-md flex items-center justify-center">
+              <button className="bg-blue-500 text-white px-2 h-10 rounded-r-md flex items-center justify-center">
                 <FaSearch />
               </button>
             </div>
