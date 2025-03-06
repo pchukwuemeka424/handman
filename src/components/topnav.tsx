@@ -19,7 +19,7 @@ export default function Topnav() {
           alt="Logo"
           width={100}
           height={100}
-          className="h-16 w-36 sm:h-16 sm:w-36 "
+          className="h-16 w-20 sm:h-16 sm:w-36 "
         />
         </Link>
       <div className="mr-2">
@@ -41,10 +41,10 @@ export default function Topnav() {
                  <SearchBar value={marketInput} onChange={setMarketInput} />
               {/* Location Dropdown */}
               <div className="relative w-full sm:w-48">
-                <FaMapMarkerAlt className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+              
                 <select
                   name="state"
-                  className="w-full pl-10 pr-4 py-2  border border-gray-300 text-gray-700 focus:outline-none">
+                  className="w-full pl-10 pr-4 py-2   text-gray-700 focus:outline-none">
                   <option value="">Location</option>
                   {nigeriaStates.map((state) => (
                     <option key={state} value={state}>
