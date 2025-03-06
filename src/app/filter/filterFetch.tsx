@@ -112,6 +112,22 @@ export default function SearchProduct() {
 
   return (
     <div className="col-span-12 sm:col-span-12">
+      {/* No results found UI */}
+      {!loading && userDetail.length === 0 && (
+        <div className="flex flex-col items-center justify-center text-gray-500 mt-10">
+          <MdErrorOutline className="text-red-400 text-6xl mb-2" />
+          <h3 className="text-lg font-semibold">No results found</h3>
+          <p className="text-sm text-center max-w-md">
+            We couldn't find any service providers matching your search criteria. 
+            Try adjusting your search or exploring other categories.
+          </p>
+          <Link href="/" className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+            Explore Services
+          </Link>
+        </div>
+      )}
+
+      {/* User List */}
       {userDetail.map((user, index) => (
         <Link href={`/trades/${user.user_id}`} key={`${user.id}-${index}`} passHref>
           <Card className="hover:shadow-xl transition-all transform hover:scale-105 p-4 my-2 rounded-lg border border-gray-300">
@@ -138,8 +154,12 @@ export default function SearchProduct() {
           </Card>
         </Link>
       ))}
+
+      {/* Loading & No More Users */}
       {loading && <div className="text-center mt-4">Loading more users...</div>}
-      {!hasMore && <div className="text-center mt-4 text-gray-500">No more users to load.</div>}
+      {!loading && !hasMore && userDetail.length > 0 && (
+        <div className="text-center mt-4 text-gray-500">No more users to load.</div>
+      )}
     </div>
   );
 }

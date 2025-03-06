@@ -6,6 +6,8 @@ import { FaStore, FaPhone, FaMapMarkerAlt, FaStar, FaCheckCircle } from "react-i
 import supabaseDb from "@/utils/supabase-db";
 import Image from "next/image";
 import TabFetch from "@/components/tabsFetch";
+import Link from "next/link";
+import SendMessageModel from "@/components/sendMessageModel";
 
 const ProductPage: FC = () => {
   const params = useParams();
@@ -130,7 +132,7 @@ const ProductPage: FC = () => {
               <span>{userDetail.city}, {userDetail.state}</span>
             </div>
 
-            {/* Verified & Unverified Badge */} 
+            {/* Verified & Unverified Badge */}
             {userDetail.kyc_status === "Approved" && (
               <div className="flex items-center text-green-600 font-medium mt-2">
                 <FaCheckCircle className="mr-1 text-lg" /> Verified
@@ -145,12 +147,16 @@ const ProductPage: FC = () => {
 
           {/* Call & Message Buttons */}
           <div className="w-full sm:w-96 flex flex-col gap-2 mt-6 lg:mt-0">
-            <button className="flex items-center justify-center gap-2 bg-red-600 text-white font-bold py-2 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105">
-              <FaPhone /> Call Now
-            </button>
-            <button className="flex items-center justify-center gap-2 border-black border-2 bg-white text-black font-bold py-2 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105">
-              <FaStore /> Send a Message
-            </button>
+            <Link href={`tel:${userDetail.phone}`} className="flex items-center justify-center gap-2 bg-red-600 text-white font-bold py-2 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105 no-underline">
+              <button className="flex items-center justify-center ">
+                <FaPhone className="mr-2" /> Call Now
+              </button>
+            </Link>
+           
+           <SendMessageModel userDetail={userDetail} />
+          
+
+
           </div>
         </div>
       </div>

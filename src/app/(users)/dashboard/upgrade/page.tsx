@@ -22,7 +22,7 @@ export default function Page() {
         const { data, error: dataError } = await supabase
           .from("user_profile")
           .select("*")
-          .eq("id", user.id)
+          .eq("user_id", user.id)
           .single();
 
         if (dataError) throw dataError;

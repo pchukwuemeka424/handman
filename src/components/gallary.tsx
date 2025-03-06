@@ -5,7 +5,7 @@ export default function Gallery({ userDetail }) {
   const [images, setImages] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [limit, setLimit] = useState(6); // Initial limit for images
+  const [limit, setLimit] = useState(10); // Initial limit for images
   const userId = userDetail?.user_id;
 
   useEffect(() => {

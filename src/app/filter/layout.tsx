@@ -8,9 +8,9 @@ export const metadata: Metadata = {
 }
 export default function Layout({ children }) {
   return (
-    <div className="mx-auto max-w-7xl">
+    <div className="container mx-auto max-w-7xl">
       <Topnav />
-      <div>{children}</div>
+      <div >{children}</div>
     </div>
   );
 }

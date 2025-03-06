@@ -45,9 +45,9 @@ export default function Navbar() {
              <Image 
             src={logo} 
             alt="Logo" 
-            className="w-40 h-30 sm:w-56 sm:h-36 object-contain"  
-            width={340} 
-            height={300} 
+            className="w-26 h-30 sm:w-36 sm:h-36 object-contain m-2"  
+            width={100} 
+            height={100} 
           />
           </Link>
             )}
@@ -59,7 +59,7 @@ export default function Navbar() {
 
           {/* Navigation Links */}
           {user ? (
-            <div className="flex space-x-6">
+            <div className="flex space-x-6 m-2">
               <Link href="/dashboard" className="text-white hover:text-gray-300 transition">
                 Dashboard 
               </Link>

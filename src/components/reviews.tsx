@@ -68,8 +68,8 @@ export default function Reviews({ userDetail }) {
   }
 
   return (
-    <div className="mx-auto bg-white ">
-      <h4 className="text-xl font-semibold mb-4">Customer Reviews</h4>
+    <div className="mx-auto">
+      <h4 className="text-xl font-semibold mb-4 px-3">Customer Reviews</h4>
       <div className="space-y-4 mb-6">
         {reviews.slice(0, visibleCount).map((review, index) => (
           <Card key={index} className="p-3 ">
@@ -118,7 +118,7 @@ export default function Reviews({ userDetail }) {
         </div>
         <Button
           onClick={submitReview}
-          className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
+          className="w-56 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
         >
           Submit Review
         </Button>

@@ -5,10 +5,11 @@ import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { createClient } from '@/utils/supabase/client';
 
-export default function MessageForm({ product}) {
+export default function MessageForm({ userDetail }: any) {
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [message, setMessage] = useState(`I am interested in the ${product.title} product. Check your inbox for my details.`);
+  const [address, setAddress] = useState('');
+  const [message, setMessage] = useState("");
   const [notifyByText, setNotifyByText] = useState(false);
   const [formStatus, setFormStatus] = useState('idle');
 
@@ -41,7 +42,8 @@ export default function MessageForm({ product}) {
         {
           name,
           phone: phoneNumber,
-          user_id: product.user_id,
+          address: address,
+          user_id: userDetail.user_id,
           message,
         }
       ]);
@@ -71,24 +73,26 @@ export default function MessageForm({ product}) {
   };
 
   return (
-    <div className="p-2 bg-white rounded-lg">
+    <div className="p-2 bg-white rounded-lg overflow-y-auto">
      
       {formStatus === 'success' && <div className="text-green-600 text-center mb-4">Message sent successfully!</div>}
       {formStatus === 'error' && <div className="text-red-600 text-center mb-4">Something went wrong. Please try again.</div>}
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <Label htmlFor="name">Name:</Label>
-          <Input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} required />
-          <Input type="hidden" id="userPhone" value={product.user_profile.phone} onChange={(e) => setName(e.target.value)} required />
+          <Label htmlFor="name">Full Name:</Label>
+          <Input type="text" id="name" placeholder='Full Name' value={name} onChange={(e) => setName(e.target.value)} required />
+          <Input type="hidden" id="userPhone" value={userDetail.phone} onChange={(e) => setName(e.target.value)} required />
         </div>
         <div className="mb-4">
           <Label htmlFor="phoneNumber">Phone Number:</Label>
-          <Input type="text" id="phoneNumber" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} required />
+          <Input type="text" id="phoneNumber" placeholder='Phone Number' value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} required />
         </div>
+        
         <div className="mb-4">
-          <Label htmlFor="productImage">Product Image:</Label>
-          <Image src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${product.image}`} className="w-16 h-16 rounded-lg" alt="Product" width={100} height={100} />
+          <Label htmlFor="Address">Address</Label>
+          <Input type="text" id="address" placeholder='Address' value={address} onChange={(e) => setAddress(e.target.value)} required />
         </div>
+        
         <div className="mb-4">
           <Label htmlFor="message">Message:</Label>
           <textarea id="message" value={message} onChange={(e) => setMessage(e.target.value)} required className="w-full p-2 border rounded" />
@@ -97,7 +101,7 @@ export default function MessageForm({ product}) {
           <input type="checkbox" id="notifyByText" checked={notifyByText} onChange={() => setNotifyByText(!notifyByText)} />
           <Label htmlFor="notifyByText" className="ml-2">Notify me via text message if the seller is offline</Label>
         </div>
-        <Button type="submit" className="w-full bg-indigo-600 text-white">Submit</Button>
+        <Button type="submit" className="w-full bg-indigo-600 text-white">Send  Message</Button>
       </form>
     </div>
   );

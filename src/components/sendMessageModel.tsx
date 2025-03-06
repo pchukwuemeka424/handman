@@ -16,35 +16,32 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createClient } from "@/utils/supabase/client";
 
-import { FaF } from "react-icons/fa6";
+import { FaF, FaMessage } from "react-icons/fa6";
 import Message from "./message";
 
 
 
-export default function SendMessageModel({product}:any) {
+export default function SendMessageModel({ userDetail }: any) {
 
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-      <span>
-          <Button>
-       <FaFileAlt />
-        Message
+        <span>
+          <Button className="flex items-center justify-center w-full  gap-2 border-black border-2 bg-white text-black py-4 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105">
+            <FaMessage className="mr-2" />
+            Send a Message
           </Button>
         </span>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Send Message</DialogTitle>
-          <DialogDescription>
-        Send Message to Vendor
-          </DialogDescription>
+        
         </DialogHeader>
- 
-      <Message product={product} />
+
+        <Message userDetail={userDetail} />
       </DialogContent>
     </Dialog>
   );
 }
- 

@@ -41,7 +41,7 @@ export default function HeroHandyman() {
         </p>
 
         {/* Search Bar Form */}
-        <form action={search} className="flex flex-col sm:flex-row items-center justify-center w-full gap-2">
+        <form action={search} className="flex flex-col sm:flex-row items-center justify-center w-full">
           {/* Search Input */}
           <div className="relative w-full sm:w-96">
             <SearchBar value={marketInput} onChange={setMarketInput} />
@@ -52,7 +52,7 @@ export default function HeroHandyman() {
             <FaMapMarkerAlt className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
             <select
               name="state"
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300  text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none"
             >
               <option value="">Location</option>
               {nigeriaStates.map((state) => (
@@ -66,8 +66,8 @@ export default function HeroHandyman() {
           {/* Search Button */}
           <button
             type="submit"
-            className="w-full sm:w-auto flex items-center justify-center bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition whitespace-nowrap"
-          >
+            className="w-full sm:w-auto flex items-center justify-center bg-blue-600 text-white px-2 py-2  hover:bg-blue-700 transition whitespace-nowrap"
+          > 
             <AiOutlineSearch className="w-6 h-6 mr-2" />
             Search
           </button>
