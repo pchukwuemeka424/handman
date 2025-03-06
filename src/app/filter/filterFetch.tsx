@@ -4,8 +4,7 @@ import supabaseDb from '@/utils/supabase-db';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Card, CardTitle, CardDescription } from '@/components/ui/card';
-import Spinner from '@/components/spinner';
-import { MdErrorOutline } from 'react-icons/md';
+import { MdSearch } from 'react-icons/md';
 
 interface UserProfile {
   id: string;
@@ -41,23 +40,22 @@ export default function SearchProduct() {
   const state = searchParams.get('state');
 
   const fetchDetails = useCallback(async (page: number, search?: string, state?: string) => {
-    if (!hasMore) return;
-    setLoading(true);
+    if (!hasMore || loading) return; // Prevent duplicate requests
 
     try {
-      let query = supabaseDb
+      const query = supabaseDb
         .from('user_profile')
         .select('id, fname, lname, state, city, avatar, kyc_status, busName, Banner, user_id, skills')
         .order('created_at', { ascending: false })
         .range((page - 1) * 10, page * 10 - 1);
 
-      if (search) query = query.ilike('skills', `%${search}%`);
-      if (state) query = query.ilike('state', `%${state}%`);
+      if (search) query.ilike('skills', `%${search}%`);
+      if (state) query.ilike('state', `%${state}%`);
 
       const { data, error } = await query;
       if (error) throw error;
 
-      if (data.length === 0) {
+      if (!data.length) {
         setHasMore(false);
         return;
       }
@@ -79,15 +77,15 @@ export default function SearchProduct() {
       });
 
       setUserDetail(prev => [...prev, ...userRatings.filter(p => !prev.some(prev => prev.id === p.id))]);
-
       if (userRatings.length < 10) setHasMore(false);
     } catch (error) {
       console.error('Error fetching users:', error.message);
     } finally {
       setLoading(false);
     }
-  }, [hasMore]);
+  }, [hasMore, loading]);
 
+  // Fetch initial data outside of useEffect
   useEffect(() => {
     setUserDetail([]);
     setPage(1);
@@ -95,9 +93,13 @@ export default function SearchProduct() {
     fetchDetails(1, search, state);
   }, [search, state]);
 
+  // Infinite scroll event listener
   useEffect(() => {
     const handleScroll = () => {
-      if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 200 && !loading) {
+      if (
+        window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 200 &&
+        !loading
+      ) {
         setPage(prev => prev + 1);
       }
     };
@@ -106,40 +108,57 @@ export default function SearchProduct() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [loading]);
 
+  // Fetch next page when page state updates
   useEffect(() => {
-    fetchDetails(page, search, state);
+    if (page > 1) {
+      setLoading(true); // Set loading only for subsequent pages
+      fetchDetails(page, search, state);
+    }
   }, [page]);
 
   return (
     <div className="col-span-12 sm:col-span-12">
-      {userDetail.map((user, index) => (
-        <Link href={`/trades/${user.user_id}`} key={`${user.id}-${index}`} passHref>
-          <Card className="hover:shadow-xl transition-all transform hover:scale-105 p-4 my-2 rounded-lg border border-gray-300">
-            <div className="flex items-center space-x-4">
-              <div className="flex-shrink-0">
-                <Image
-                  src={user?.avatar}
-                  alt={user.busName || `User ${index + 1}`}
-                  className="w-24 h-24 rounded-lg shadow-md"
-                  width={96}
-                  height={96}
-                />
-              </div>
-              <div className="text-gray-700">
-                <CardTitle className="text-xl font-semibold capitalize">{user.busName}</CardTitle>
-                <p className="text-sm text-gray-500">{user.state || 'State'}, {user.city || 'City'}</p>
-                <div className="text-md text-blue-400">
-                  {renderStars(user.averageRating)} {user.averageRating?.toFixed(1)}/5 ({user.reviewCount} Reviews)
+      {userDetail.length > 0 ? (
+        userDetail.map((user, index) => (
+          <Link href={`/trades/${user.user_id}`} key={`${user.id}-${index}`} passHref>
+            <Card className="hover:shadow-xl transition-all transform hover:scale-105 p-4 my-2 rounded-lg border border-gray-300">
+              <div className="flex items-center space-x-4">
+                <div className="flex-shrink-0">
+                  <Image
+                    src={user?.avatar}
+                    alt={user.busName || `User ${index + 1}`}
+                    className="w-24 h-24 rounded-lg shadow-md"
+                    width={96}
+                    height={96}
+                  />
+                </div>
+                <div className="text-gray-700">
+                  <CardTitle className="text-xl font-semibold capitalize">{user.busName}</CardTitle>
+                  <p className="text-sm text-gray-500">{user.state || 'State'}, {user.city || 'City'}</p>
+                  <div className="text-md text-blue-400">
+                    {renderStars(user.averageRating)} {user.averageRating?.toFixed(1)}/5 ({user.reviewCount} Reviews)
+                  </div>
                 </div>
               </div>
-            </div>
-            <CardDescription className="mt-2 text-gray-600 capitalize font-semibold">Services & Skills</CardDescription>
-            <div className="text-xs text-gray-600">{user.skills || 'Handyman, Plumber, Carpenter, Electrician, Painter'}</div>
-          </Card>
-        </Link>
-      ))}
+              <CardDescription className="mt-2 text-gray-600 capitalize font-semibold">Services & Skills</CardDescription>
+              <div className="text-xs text-gray-600">{user.skills || 'Handyman, Plumber, Carpenter, Electrician, Painter'}</div>
+            </Card>
+          </Link>
+        ))
+      ) : (
+        !loading && (
+          <div className="flex flex-col items-center justify-center py-10 text-gray-500">
+            <MdSearch className="text-6xl text-gray-400" />
+            <p className="mt-2 text-lg font-semibold">No results found</p>
+            <p className="text-sm text-gray-500">Try adjusting your search or use different keywords.</p>
+          </div>
+        )
+      )}
+
       {loading && <div className="text-center mt-4">Loading more users...</div>}
-      {!hasMore && <div className="text-center mt-4 text-gray-500">No more users to load.</div>}
+      {!hasMore && userDetail.length > 0 && (
+        <div className="text-center mt-4 text-gray-500">No more users to load.</div>
+      )}
     </div>
   );
 }
