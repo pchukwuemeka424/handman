@@ -28,7 +28,7 @@ export default function Register() {
   }, [prev?.successMessage]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+    <div className="min-h-screen flex items-center   p-4">
       <div className="w-full max-w-md bg-white shadow-lg rounded-2xl p-6">
         <div className="flex items-center mb-4">
           <Link href="/">
@@ -46,14 +46,16 @@ export default function Register() {
         )}
         
         <form className="space-y-4" action={action}>
-          <Input type="text" name="fname" placeholder="First Name" defaultValue={prev?.fname || ""} />
+        <div className="grid grid-cols-2 space-x-2">
+        <Input type="text" name="fname" placeholder="First Name" defaultValue={prev?.fname || ""} />
           {prev?.errors?.fname && <span className="text-red-500 text-sm">{prev.errors.fname}</span>}
 
           <Input type="text" name="lname" placeholder="Last Name" defaultValue={prev?.lname || ""} />
           {prev?.errors?.lname && <span className="text-red-500 text-sm">{prev.errors.lname}</span>}
+        </div>
 
-          <Input type="text" name="serviceType" placeholder="Service Type (e.g. Plumber, Electrician)" defaultValue={prev?.serviceType || ""} />
-          {prev?.errors?.serviceType && <span className="text-red-500 text-sm">{prev.errors.serviceType}</span>}
+          {/* <Input type="text" name="serviceType" placeholder="Service Type (e.g. Plumber, Electrician)" defaultValue={prev?.serviceType || ""} />
+          {prev?.errors?.serviceType && <span className="text-red-500 text-sm">{prev.errors.serviceType}</span>} */}
           
           <Input type="tel" name="phone" placeholder="Phone Number" defaultValue={prev?.phone || ""} />
           {prev?.errors?.phone && <span className="text-red-500 text-sm">{prev.errors.phone}</span>}
