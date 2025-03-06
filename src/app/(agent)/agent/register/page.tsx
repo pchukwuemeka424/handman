@@ -21,7 +21,12 @@ export default function Register() {
 
   const [prev, action, isPending] = useActionState(agentRegister, {});
 
-
+  const statesInNigeria = [
+    "Abia", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi", "Bayelsa", "Benue", "Borno", "Cross River", "Delta",
+    "Ebonyi", "Edo", "Ekiti", "Enugu", "Gombe", "Imo", "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi",
+    "Kwara", "Lagos", "Nasarawa", "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers", "Sokoto", "Taraba",
+    "Yobe", "Zamfara"
+  ];
 
   const generateAgentId = (state) => {
     if (!state) return "";
@@ -59,7 +64,7 @@ export default function Register() {
           <InputField type="text" name="fname" value={formData.fname} onChange={handleChange} icon={AiOutlineUser} placeholder="First Name" error={prev?.errors?.fname} />
           <InputField type="text" name="lname" value={formData.lname} onChange={handleChange} icon={AiOutlineUser} placeholder="Last Name" error={prev?.errors?.lname} />
           <SelectField name="state" value={formData.state} onChange={handleChange} options={statesInNigeria} error={prev?.errors?.state} />
-       
+          <InputField type="text" name="agentId" value={formData.agentId} icon={AiOutlineGlobal} placeholder="Agent ID" readOnly />
           <InputField type="email" name="email" value={formData.email} onChange={handleChange} icon={AiOutlineMail} placeholder="Email" error={prev?.errors?.email} />
           <InputField type="password" name="password" value={formData.password} onChange={handleChange} icon={AiOutlineLock} placeholder="Password" error={prev?.errors?.password} />
           <Button type="submit" disabled={isPending} className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition-all">
