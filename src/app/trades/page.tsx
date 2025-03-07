@@ -3,7 +3,7 @@
 import React from 'react';
 import CategoryList from '@/components/category';
 import ProductFetch from './productFetch';
-import Slider from '@/components/slider';
+import Slider from '@/components/sliderBox';
 
 export default function Page() {
   return (

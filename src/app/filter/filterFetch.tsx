@@ -150,7 +150,7 @@ export default function SearchProduct() {
                 {user.skills
                   ? user.skills.split(',').map((skill, index) => (
                     <span key={index} className="flex items-center gap-1">
-                      <FaCheckCircle className="text-green-500" /> {skill.trim()}
+                      <FaCheckCircle className="text-blue-500" /> {skill.trim()}
                     </span>
                   ))
                   : ['Handyman', 'Plumber', 'Carpenter', 'Electrician', 'Painter'].map((defaultSkill, index) => (
