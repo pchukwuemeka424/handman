@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import SearchBar from "./searchBar";
 import Link from "next/link";
+import { search } from "@/actions/auth/search";
 
 
 export default function Topnav() {
@@ -34,7 +35,7 @@ export default function Topnav() {
       <div className="w-full sm:flex sm:justify-end items-center px-4">
        
         <div>
-          <form className=" w-full mx-auto" action="/filter">
+          <form className=" w-full mx-auto" action={search}>
             <div className="flex items-center ">
               {/* Search Input */}
 

@@ -2,7 +2,7 @@
 import Spinner from '@/components/spinner'
 import React from 'react'
 
-export default function adam() {
+export default function loading() {
   return (
    <Spinner />
   )

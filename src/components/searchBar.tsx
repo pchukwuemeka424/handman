@@ -48,7 +48,7 @@ export default function SearchBar({ value, onChange }) {
     <div className="w-full relative">
       <input
         type="text"
-        name="q"
+        name="search"
         placeholder="What are you looking for?"
         className="w-full px-4 h-12 sm:h-14 py-2 border border-gray-300  focus:outline-none"
         value={value}
