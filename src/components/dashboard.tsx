@@ -2,118 +2,90 @@
 
 import { useUser } from "@/context/userContext";
 import React, { useEffect, useState } from "react";
-import MultiSelectCombobox from "./MultiSelectCombobox";
 import supabaseDb from "@/utils/supabase-db";
+
+import { Button } from "@/components/ui/button";
+import  Link from "next/link";  
 
 const Dashboard: React.FC = () => {
   const user = useUser();
   const [averageRating, setAverageRating] = useState<number | null>(null);
   const [notificationCount, setNotificationCount] = useState<number>(0);
+  const [earnings, setEarnings] = useState<number>(0);
+  const [jobRequests, setJobRequests] = useState<number>(0);
+  const [availability, setAvailability] = useState<boolean>(true);
 
   useEffect(() => {
     if (!user?.user_id) return;
 
-    const fetchUserRating = async () => {
+    const fetchData = async () => {
       try {
-        const { data, error } = await supabaseDb
-          .from("rating")
-          .select("stars")
-          .eq("user_id", user.user_id);
+        const [{ data: ratingData }, { count: messageCount }, { data: earningsData }, { count: jobCount }] = await Promise.all([
+          supabaseDb.from("rating").select("stars").eq("user_id", user.user_id),
+          supabaseDb.from("message").select("id", { count: "exact" }).eq("user_id", user.user_id),
+          supabaseDb.from("transactions").select("amount").eq("user_id", user.user_id),
+          supabaseDb.from("jobs").select("id", { count: "exact" }).eq("user_id", user.user_id)
+        ]);
 
-        if (error) throw error;
-
-        const totalStars = data.reduce(
-          (acc, rating) => acc + (parseFloat(rating.stars) || 0),
-          0
-        );
-        const reviewCount = data.length;
-        const calculatedRating =
-          reviewCount > 0 ? Math.round((totalStars / reviewCount) * 10) / 10 : 0;
-
-        setAverageRating(calculatedRating);
+        const totalStars = ratingData?.reduce((acc, rating) => acc + (parseFloat(rating.stars) || 0), 0) || 0;
+        const reviewCount = ratingData?.length || 0;
+        setAverageRating(reviewCount > 0 ? Math.round((totalStars / reviewCount) * 10) / 10 : 0);
+        setNotificationCount(messageCount ?? 0);
+        setEarnings(earningsData?.reduce((acc, txn) => acc + txn.amount, 0) || 0);
+        setJobRequests(jobCount ?? 0);
       } catch (error) {
-        console.error("Error fetching user rating:", error.message);
+        console.error("Error fetching dashboard data:", error.message);
       }
     };
 
-    fetchUserRating();
+    fetchData();
   }, [user?.user_id]);
-
-  const fetchNotificationCount = async () => {
-    if (!user?.user_id) return;
-
-    try {
-      const { count, error } = await supabaseDb
-        .from("message")
-        .select("id", { count: "exact" }) // Selecting specific column for accurate count
-        .eq("user_id", user.user_id);
-
-      if (error) throw error;
-      setNotificationCount(count ?? 0);
-    } catch (error) {
-      console.error("Error fetching notification count:", error.message);
-    }
-  };
-
-  useEffect(() => {
-    fetchNotificationCount();
-
-    // ✅ Fix: Use correct real-time subscription for database changes
-    const subscription = supabaseDb
-      .channel("realtime:message")
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "message", filter: `user_id=eq.${user?.user_id}` },
-        (payload) => {
-          console.log("New message update:", payload);
-          fetchNotificationCount(); // Refresh count on update
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabaseDb.removeChannel(subscription);
-    };
-  }, [user?.user_id]);
-
-  const renderStars = (rating: number) => {
-    const fullStars = Math.floor(rating);
-    const halfStar = rating % 1 >= 0.5 ? 1 : 0;
-    const emptyStars = 5 - fullStars - halfStar;
-    return "⭐".repeat(fullStars) + (halfStar ? "⭐" : "") + "☆".repeat(emptyStars);
-  };
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
-      <div className="max-w-4xl w-full space-y-2">
+      <div className="max-w-4xl w-full space-y-4">
         <h1 className="text-3xl font-bold text-center text-gray-800">
           Welcome, <span className="capitalize">{user?.fname ?? "Guest"} {user?.lname ?? ""}</span>
         </h1>
-        <div className=" text-center text-2xl font-semibold text-gray-700">{user?.busName}</div>
+        <div className="text-center text-2xl font-semibold text-gray-700">{user?.busName}</div>
 
-        {/* Rating & Notifications */}
+        {/* Quick Actions */}
+        <div className="flex justify-center gap-4 my-4">
+          <Link href="/dashboard/profile">
+          <Button variant="default">Manage Profile</Button>
+          </Link>
+          <Link href="/dashboard/message">
+          <Button variant="secondary">Message</Button>
+          </Link>
+        </div>
+
+        {/* Dashboard Stats */}
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-white p-6 rounded-2xl shadow-lg text-center">
             <h2 className="text-xl font-semibold text-gray-700">Rating</h2>
-            <p className="text-2xl font-bold text-yellow-400">
-              {averageRating !== null ? `${renderStars(averageRating)} ${averageRating}/5` : "Loading..."}
-            </p>
+            <p className="text-2xl font-bold text-yellow-400">{averageRating ?? "Loading..."} ⭐</p>
           </div>
           <div className="bg-white p-6 rounded-2xl shadow-lg text-center">
             <h2 className="text-xl font-semibold text-gray-700">Notifications</h2>
             <p className="text-2xl font-bold text-red-500">{notificationCount} New</p>
           </div>
+          <div className="bg-white p-6 rounded-2xl shadow-lg text-center">
+            <h2 className="text-xl font-semibold text-gray-700">Earnings</h2>
+            <p className="text-2xl font-bold text-green-500">₦{earnings}</p>
+          </div>
+          <div className="bg-white p-6 rounded-2xl shadow-lg text-center">
+            <h2 className="text-xl font-semibold text-gray-700">Job Requests</h2>
+            <p className="text-2xl font-bold text-blue-500">{jobRequests} Pending</p>
+          </div>
         </div>
 
-        {/* Add Skills */}
-        <div className="bg-white p-6 rounded-2xl shadow-lg">
-          <h2 className="text-xl font-semibold text-gray-700 mb-4">Add Your Skills</h2>
-          <form>
-            <MultiSelectCombobox />
-            <button className="mt-4 w-full p-3 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600">
-              Add Skill
-            </button>
-          </form>
+        {/* Availability Toggle */}
+        <div className="flex items-center justify-center mt-4">
+          <span className="text-gray-700 font-semibold">Availability:</span>
+        
+          <span className={`ml-2 font-semibold ${availability ? "text-green-600" : "text-red-600"}`}>
+            {availability ? "Available" : "Busy"}
+          </span>
         </div>
       </div>
     </div>

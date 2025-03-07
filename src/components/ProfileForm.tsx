@@ -1,6 +1,6 @@
 
 
-import { Link } from "lucide-react";
+import  Link  from "next/link";
 import { Input } from "@/components/ui/input"
 import React, { useState } from "react";
 import { useActionState } from "react"; // Ensure this is a valid import or replace with a correct hook
@@ -23,6 +23,13 @@ export default function ProfileForm({ handler, profile }) {
 
         <div className="grid grid-cols-2 gap-4">
           <div>
+          <Input
+              type="hidden"
+              name="user_id"
+              placeholder="First Name"
+              defaultValue={profile?.user_id}
+
+            />
             <Input
               type="text"
               name="fname"
@@ -76,6 +83,15 @@ export default function ProfileForm({ handler, profile }) {
             name="email"
             placeholder="Email"
             defaultValue={profile?.email}
+          />
+
+        </div>
+        <div className="mt-4">
+          <Input
+            type="text"
+            name="skills"
+            placeholder="skills"
+            defaultValue={profile?.skills}
           />
 
         </div>

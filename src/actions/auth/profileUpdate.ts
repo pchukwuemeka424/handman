@@ -3,6 +3,7 @@
 import { z } from "zod";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
+import { revalidatePath } from "next/cache";
 
 export default async function profileUpdate(state: any, formData: FormData) {
   const supabase = await createClient();
@@ -16,17 +17,12 @@ export default async function profileUpdate(state: any, formData: FormData) {
 
   // Validation schema
   const schema = z.object({
-    username: z.string().min(3, "Username must be at least 3 characters long"),
-    shopname: z.string().min(3, "Shop name must be at least 3 characters long"),
-    phone: z.string().regex(/^\d{11}$/, "Phone must be 11 digits"),
-    address: z.string().optional(),
-    stat: z.string().min(2, "State is required"),
-    city: z.string().min(2, "City is required"),
-    facebook: z.string().optional(),
-    instagram: z.string().optional(),
-    tiktok: z.string().optional(),
-    twitter: z.string().optional(),
-    about: z.string().optional(),
+    user_id: z.string().min(3, "User ID must be at least 3 characters long"),
+    fname: z.string().min(3, "First name must be at least 3 characters long"),  
+    lname: z.string().min(3, "Last name must be at least 3 characters long"),
+    phone: z.string().min(10, "Phone number must be at least 10 characters long"),
+    email: z.string().email("Invalid email address"),
+    skills: z.string().min(3, "Skills must be at least 3 characters long"),
   });
 
   const profileData = Object.fromEntries(formData);
@@ -39,14 +35,23 @@ export default async function profileUpdate(state: any, formData: FormData) {
   const { error } = await supabase
     .from("user_profile")
     .update(validation.data)
-    .eq("id", user.id);
+    .eq("user_id", validation.data.user_id);
 
   if (error) {
     console.error("Profile update error:", error);
     return { errors: { message: "Failed to update profile" } };
   }
 
-  // Redirect and ensure function ends
+  // Debugging logs
+  console.log("Revalidating path: /profile");
+
+  // Ensure revalidation completes before redirect
+  await revalidatePath("/profile");
+
+  console.log("Revalidation completed, redirecting...");
+
+  // Redirect to profile page
   redirect("/dashboard");
-  return null; // Ensure no further execution happens after the redirect
+
+  return null; // Ensure no further execution happens
 }
