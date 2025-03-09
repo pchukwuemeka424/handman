@@ -13,7 +13,7 @@ export default function Topnav() {
   const [marketInput, setMarketInput] = React.useState("");
   return (
     <div>
-      <div className="flex justify-between items-center px-4 py-2">
+      <div className="flex justify-between items-center px-2 py-2">
      <Link href="/">
      <Image
           src="https://fbpdbcxjavianaboavoo.supabase.co/storage/v1/object/public/images//logojh.png"

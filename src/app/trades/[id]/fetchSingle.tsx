@@ -86,7 +86,7 @@ const ProductPage: FC = () => {
   }
 
   return (
-    <div className="container mx-auto p-4">
+    <div >
       <div className="h-40 sm:h-64 relative">
         <Image
           src={userDetail?.Banner}
