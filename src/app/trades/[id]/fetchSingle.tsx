@@ -87,7 +87,7 @@ const ProductPage: FC = () => {
 
   return (
     <div >
-      <div className="h-40 sm:h-64 relative">
+      <div className="h-40 sm:h-64 my-2 relative">
         <Image
           src={userDetail?.Banner}
           alt="Banner Image"
