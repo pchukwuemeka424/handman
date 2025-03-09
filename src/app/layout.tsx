@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import TawkToScript from "@/components/TawkToScript"; // Import the Tawk.to script component
+import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
   title: `${process.env.APP_NAME}`,
@@ -36,6 +37,7 @@ export default function RootLayout({
       <body>
         {children}
         <TawkToScript /> {/* Load the Tawk.to script dynamically */}
+       
       </body>
     </html>
   );

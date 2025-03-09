@@ -33,9 +33,9 @@ const renderStars = (rating: number) => {
 export default function SearchProduct() {
   const [userDetail, setUserDetail] = useState<UserProfile[]>([]);
   const [loading, setLoading] = useState(false);
-  const [fetched, setFetched] = useState(false); // ✅ Track if fetching is done
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const [fetched, setFetched] = useState(false);
 
   const searchParams = useSearchParams();
   const search = searchParams.get('q');
@@ -51,7 +51,7 @@ export default function SearchProduct() {
         .from('user_profile')
         .select('id, fname, lname, state, city, avatar, kyc_status, busName, Banner, user_id, skills')
         .order('created_at', { ascending: false })
-        .range((page - 1) * 10, page * 10 - 1);
+        .range((page - 1) * 10, page * 10 - 1); // ✅ Correct pagination
 
       if (search) query = query.ilike('skills', `%${search}%`);
       if (state) query = query.ilike('state', `%${state}%`);
@@ -79,12 +79,12 @@ export default function SearchProduct() {
         });
 
         setUserDetail(prev => [...prev, ...userRatings.filter(p => !prev.some(prev => prev.id === p.id))]);
-        if (userRatings.length < 10) setHasMore(false);
+        setHasMore(userRatings.length === 10); // ✅ Dynamically set hasMore
       }
     } catch (error) {
       console.error('Error fetching users:', error.message);
     } finally {
-      setFetched(true); // ✅ Mark fetch as complete
+      setFetched(true);
       setLoading(false);
     }
   }, [hasMore, loading]);
@@ -93,30 +93,30 @@ export default function SearchProduct() {
     setUserDetail([]);
     setPage(1);
     setHasMore(true);
-    setFetched(false); // ✅ Reset fetched state
+    setFetched(false);
     fetchDetails(1, search, state);
   }, [search, state]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 200 &&
-        !loading &&
-        hasMore
-      ) {
-        setPage(prev => prev + 1);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+  const handleScroll = useCallback(() => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 200 &&
+      !loading &&
+      hasMore
+    ) {
+      setPage(prev => prev + 1);
+    }
   }, [loading, hasMore]);
 
   useEffect(() => {
-    if (page > 1) {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
+
+  useEffect(() => {
+    if (page > 1 && hasMore) {
       fetchDetails(page, search, state);
     }
-  }, [page]);
+  }, [page, search, state, hasMore]);
 
   return (
     <div className="col-span-12 sm:col-span-12">
@@ -163,7 +163,7 @@ export default function SearchProduct() {
           </Link>
         ))
       ) : (
-        fetched && ( // ✅ Show 'No results found' only after fetching is completed
+        fetched && (
           <div className="flex flex-col items-center justify-center py-10 text-gray-500">
             <MdSearch className="text-6xl text-gray-400" />
             <p className="mt-2 text-lg font-semibold">No results found</p>

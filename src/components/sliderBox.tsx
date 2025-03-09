@@ -38,14 +38,14 @@ export default function SliderBox() {
     <Slider {...settings}>
       {/* Map images */}
       {images.map((image) => (
-        <div key={image.id} className="mx-2">
+        <div key={image.id} > {/* Added larger horizontal margin */}
           <Image
             src={image.image}
             width={100}
             height={100}
             alt={`Banner ${image.id}`}
             unoptimized
-            className="w-full h-36 sm:h-64 object-cover mx-2 p-0 rounded-md"
+            className="w-full h-36 sm:h-64 object-cover  sm:rounded-md"  // Removed extra margin classes from image
           />
         </div>
       ))}
