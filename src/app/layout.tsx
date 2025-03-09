@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import TawkToScript from "@/components/TawkToScript"; // Import the Tawk.to script component
-import Footer from "@/components/footer";
+
 
 export const metadata: Metadata = {
   title: `${process.env.APP_NAME}`,
@@ -14,13 +14,13 @@ export const metadata: Metadata = {
     title: `${process.env.APP_NAME}`,
     description: `${process.env.APP_DESCRIPTION}`,
     url: process.env.APP_URL || "default-url.com",
-    images: [{ url: "https://sxkmrpzbtqpraucnmnjm.supabase.co/storage/v1/object/public/logos/White-and-Blue-Shopping-Cart-Logo-DesignEvo-Logo-Maker-02-14-2025_08_47_PM.png" }],
+    images: [{ url: "https://fbpdbcxjavianaboavoo.supabase.co/storage/v1/object/public/images//logojh.png" }],
   },
   twitter: {
     card: "handyman services platform",
     title: `${process.env.APP_NAME}`,
     description: `${process.env.APP_DESCRIPTION}`,
-    images: ["https://sxkmrpzbtqpraucnmnjm.supabase.co/storage/v1/object/public/logos/White-and-Blue-Shopping-Cart-Logo-DesignEvo-Logo-Maker-02-14-2025_08_47_PM.png"],
+    images: ["https://fbpdbcxjavianaboavoo.supabase.co/storage/v1/object/public/images//logojh.png"],
   },
 };
 
