@@ -17,7 +17,7 @@ const Sitemap: NextPage = () => {
       .map((page) => {
         return `
           <url>
-            <loc>${`https://afrivendor.ng${page}`}</loc>
+            <loc>${`https://kiwifix.ng${page}`}</loc>
             <lastmod>${new Date().toISOString()}</lastmod>
             <changefreq>daily</changefreq>
             <priority>0.7</priority>

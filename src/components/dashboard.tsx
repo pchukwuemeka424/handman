@@ -36,7 +36,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center p-6">
-      <div className="max-w-3xl w-full shadow-lg p-6">
+      <div className="max-w-3xl w-full ">
         <h1 className="text-xl sm:text-4xl font-extrabold text-center text-gray-800">
           Welcome, <span className="capitalize">{user?.fname ?? "Guest"} {user?.lname ?? ""}</span>
         </h1>

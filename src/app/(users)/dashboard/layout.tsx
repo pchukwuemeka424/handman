@@ -3,9 +3,9 @@
 import React, { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
-
 import ClientLayout from "@/components/ClientLayout";
 import { UserProvider } from "@/context/userContext";
+
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const supabase = createClient();
@@ -27,7 +27,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     fetchUser();
   }, [supabase, router]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <div className="spinner"><i className="fas fa-spinner fa-spin"></i></div>;
 
   return (
     <UserProvider>

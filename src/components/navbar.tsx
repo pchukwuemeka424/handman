@@ -45,7 +45,7 @@ export default function Navbar() {
              <Image 
             src={logo} 
             alt="Logo" 
-            className="w-26 h-30 sm:w-36 sm:h-36 object-contain m-2"  
+            className="w-36 h-30 sm:w-48 sm:h-24 object-contain m-2"  
             width={100} 
             height={100} 
           />

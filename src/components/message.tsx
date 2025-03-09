@@ -99,7 +99,7 @@ export default function MessageForm({ userDetail }: any) {
         </div>
         <div className="flex items-center mb-4">
           <input type="checkbox" id="notifyByText" checked={notifyByText} onChange={() => setNotifyByText(!notifyByText)} />
-          <Label htmlFor="notifyByText" className="ml-2">Notify me via text message if the seller is offline</Label>
+          <Label htmlFor="notifyByText" className="ml-2">Notify me via text message </Label>
         </div>
         <Button type="submit" className="w-full bg-indigo-600 text-white">Send  Message</Button>
       </form>

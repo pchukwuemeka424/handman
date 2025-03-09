@@ -37,13 +37,13 @@ export default function Login() {
           className="w-full max-w-md bg-white bg-opacity-90 backdrop-blur-md shadow-2xl p-8 rounded-2xl"
         >
           {/* Logo Section */}
-          <div className="flex justify-center mb-6">
+          <div className="flex justify-center mb-2">
             <Image
-              src="/images/logo.png" // Replace with your logo path
+              src="https://fbpdbcxjavianaboavoo.supabase.co/storage/v1/object/public/images//logojh.png" // Replace with your logo path
               alt="Handyman Logo"
               width={100}
               height={100}
-              className="rounded-full"
+              className="rounded-md w-36 h-36 object-contain"
             />
           </div>
 
