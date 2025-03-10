@@ -29,7 +29,7 @@ export default function HeroHandyman() {
       style={{ backgroundImage: `url(${images[currentImageIndex]})` }}
     >
       {/* Black Overlay */}
-      <div className="absolute inset-0 bg-black opacity-50 transition-opacity"></div>
+      <div className="absolute inset-0 bg-blue-900 opacity-30 transition-opacity"></div>
 
       {/* Content Container */}
       <div className="relative container mx-auto text-left sm:text-center px-4 max-w-4xl z-10">

@@ -34,7 +34,7 @@ export default function Register() {
           <Link href="/">
             <AiOutlineArrowLeft className="text-xl cursor-pointer" />
           </Link>
-          <h2 className="text-2xl font-bold text-gray-900 mx-auto">Join as a Handyman</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mx-auto">Join as a skilled professional</h2>
         </div>
         <p className="text-center text-gray-600 mb-4">
           Sign up as a skilled professional to connect with clients and offer handyman services.

@@ -14,13 +14,13 @@ export const metadata: Metadata = {
     title: `${process.env.APP_NAME}`,
     description: `${process.env.APP_DESCRIPTION}`,
     url: process.env.APP_URL || "default-url.com",
-    images: [{ url: "https://fbpdbcxjavianaboavoo.supabase.co/storage/v1/object/public/images//logojh.png" }],
+    images: [{ url: "https://fbpdbcxjavianaboavoo.supabase.co/storage/v1/object/public/images//KwikFix-Logo-03-10-2025_09_53_PM.png" }],
   },
   twitter: {
     card: "handyman services platform",
     title: `${process.env.APP_NAME}`,
     description: `${process.env.APP_DESCRIPTION}`,
-    images: ["https://fbpdbcxjavianaboavoo.supabase.co/storage/v1/object/public/images//logojh.png"],
+    images: ["https://fbpdbcxjavianaboavoo.supabase.co/storage/v1/object/public/images//KwikFix-Logo-03-10-2025_09_53_PM.png"],
   },
 };
 

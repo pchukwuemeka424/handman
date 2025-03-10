@@ -16,11 +16,11 @@ export default function Topnav() {
       <div className="flex justify-between items-center px-2 py-2">
      <Link href="/">
      <Image
-          src="https://fbpdbcxjavianaboavoo.supabase.co/storage/v1/object/public/images//logojh.png"
+          src="https://fbpdbcxjavianaboavoo.supabase.co/storage/v1/object/public/images//KwikFix-Logo-03-10-2025_09_53_PM.png"
           alt="Logo"
-          width={100}
-          height={100}
-          className="h-16 w-36 sm:h-16 sm:w-36 "
+          width={300}
+          height={300}
+          className="w-44 h-30 sm:w-56 sm:h-24 object-contain m-2"  
         />
         </Link>
       <div className="mr-2">
