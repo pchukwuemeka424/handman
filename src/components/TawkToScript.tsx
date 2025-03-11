@@ -9,7 +9,7 @@ export default function TawkToScript() {
     const script = document.createElement("script");
     script.id = "tawk-script";
     script.async = true;
-    script.src = "https://embed.tawk.to/67b87470c3759e190c785cd7/1ikk8dmbs";
+    script.src = "https://embed.tawk.to/67d04a2f4af6cc190be79b88/1im2q3i7e";
     script.charset = "UTF-8";
     script.setAttribute("crossorigin", "*");
     document.body.appendChild(script);
