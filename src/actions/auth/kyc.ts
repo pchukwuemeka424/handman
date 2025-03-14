@@ -79,6 +79,14 @@ export default async function handleKYCSubmission(state: any, formData: FormData
       })
     
   
+      // update kyc_status from user_profile table
+      
+       const { data: profileData, error: profileError } = await supabase
+       .from("user_profile")
+       .update({ kyc_status: "Pending" })
+       .eq("user_id", user_id);
+
+
     if (insertError) {
       console.error("Error inserting KYC data:", insertError);
       return { errors: { message: `Error submitting KYC data: ${insertError.message}` } };
