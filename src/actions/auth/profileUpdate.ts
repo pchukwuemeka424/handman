@@ -23,6 +23,7 @@ export default async function profileUpdate(state: any, formData: FormData) {
     phone: z.string().min(10, "Phone number must be at least 10 characters long"),
     email: z.string().email("Invalid email address"),
     skills: z.string().min(3, "Skills must be at least 3 characters long"),
+    busName: z.string().min(3, "Business name must be at least 3 characters long"),
   });
 
   const profileData = Object.fromEntries(formData);
