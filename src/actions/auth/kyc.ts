@@ -57,7 +57,7 @@ export default async function handleKYCSubmission(state: any, formData: FormData
     const filePath = `kyc_documents/${fileName}`;
   
     const { data: uploadData, error: uploadError } = await supabase.storage
-      .from("kyc_documents")
+      .from("kyc-documents")
       .upload(filePath, documentFile, { contentType: documentFile.type });
   
     if (uploadError) {
@@ -69,14 +69,15 @@ export default async function handleKYCSubmission(state: any, formData: FormData
   
     const { data: kycData, error: insertError } = await supabase
       .from("kyc")
-      .update({
+      .insert({
         first_name: formInput.firstName,
         last_name: formInput.lastName,
         id_number: formInput.idNumber,
         verification_type: formInput.verificationType,
         document: filePath,
+        user_id: user_id,
       })
-      .eq("user_id", user_id);
+    
   
     if (insertError) {
       console.error("Error inserting KYC data:", insertError);
