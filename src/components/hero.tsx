@@ -6,27 +6,36 @@ import { search } from "@/actions/auth/search";
 import { nigeriaStates } from "./states";
 import SearchBar from "./searchBar";
 
-const images = [
-  "https://fbpdbcxjavianaboavoo.supabase.co/storage/v1/object/public/images//360_F_90919557_cgaQl5J8FAbTV8JTSBDu7IbD0sladNO6.jpg",
-  "https://fbpdbcxjavianaboavoo.supabase.co/storage/v1/object/public/images//COLOURBOX65831534.webp",
-  "https://fbpdbcxjavianaboavoo.supabase.co/storage/v1/object/public/images//sa.jpg",
+const largeScreen = [
+  "https://fbpdbcxjavianaboavoo.supabase.co/storage/v1/object/public/images//hand.png",
+];
+const smallScreen = [
+  "https://fbpdbcxjavianaboavoo.supabase.co/storage/v1/object/public/images//mbil.png",
 ];
 
 export default function HeroHandyman() {
   const [marketInput, setMarketInput] = useState("");
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [currentImage, setCurrentImage] = useState(largeScreen[0]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 5000);
-    return () => clearInterval(interval);
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setCurrentImage(smallScreen[0]);
+      } else {
+        setCurrentImage(largeScreen[0]);
+      }
+    };
+
+    handleResize(); // Set image on initial load
+    window.addEventListener("resize", handleResize); // Listen for window size changes
+
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
     <section
       className="h-screen flex flex-col justify-center items-center relative bg-cover bg-center transition-opacity duration-1000"
-      style={{ backgroundImage: `url(${images[currentImageIndex]})` }}
+      style={{ backgroundImage: `url(${currentImage})` }}
     >
       {/* Black Overlay */}
       <div className="absolute inset-0 bg-blue-900 opacity-30 transition-opacity"></div>
@@ -42,12 +51,10 @@ export default function HeroHandyman() {
 
         {/* Search Bar Form */}
         <form action={search} className="flex flex-col sm:flex-row items-center space-y-2 justify-center w-full">
-          {/* Search Input */}
           <div className="relative w-full sm:w-96">
             <SearchBar value={marketInput} onChange={setMarketInput} />
           </div>
 
-          {/* Location Select */}
           <div className="relative w-full sm:w-48">
             <FaMapMarkerAlt className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
             <select
@@ -63,11 +70,10 @@ export default function HeroHandyman() {
             </select>
           </div>
 
-          {/* Search Button */}
           <button
             type="submit"
-            className="w-full h-12 sm:h-14 sm:w-auto flex items-center justify-center bg-blue-600 text-white px-2 py-2  hover:bg-blue-700 transition whitespace-nowrap"
-          > 
+            className="w-full h-12 sm:h-14 sm:w-auto flex items-center justify-center bg-blue-600 text-white px-2 py-2 hover:bg-blue-700 transition whitespace-nowrap"
+          >
             <AiOutlineSearch className="w-6 h-6 mr-2" />
             Search
           </button>
