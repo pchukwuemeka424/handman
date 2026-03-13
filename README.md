@@ -1,4 +1,20 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kwikfix Nigeria
+
+Kwikfix Nigeria is a comprehensive handyman services platform designed to connect users with skilled professionals for various tasks, from home repairs to specialized services. The platform supports local talent while providing convenient access to reliable service providers for customers.
+
+## Overview
+
+Kwikfix Nigeria offers a seamless experience for both service providers and customers, with features like:
+- User-friendly interface for browsing and hiring professionals
+- Advanced search and filter capabilities to find the right service provider
+- Secure user authentication and KYC verification
+- In-app messaging system for direct communication
+- Payment integration with Paystack and Flutterwave
+- Rating and review system to ensure quality services
+- Dashboard for users, agents, and administrators with role-based access
+- Product and service management capabilities
+
+The application is built with Next.js 15, TypeScript, and Tailwind CSS, leveraging Supabase for authentication and storage, and MongoDB for data management.
 
 ## Getting Started
 
